@@ -117,16 +117,15 @@ for (const session of sessions) {
 
       {/* Race Name + Label */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2">
-        <h2 className="text-3xl font-bold">
-          {race.flag} {race.name}
-        </h2>
-        <span
-          className={`text-sm font-semibold px-3 py-1 rounded-full ${
-            isRaceWeek ? 'bg-green-200 text-green-800' : 'bg-blue-200 text-blue-800'
-          }`}
-        >
-          {isRaceWeek ? 'CURRENT RACE WEEK' : 'NEXT RACE WEEK'}
-        </span>
+      <h2 className="text-2xl md:text-4xl font-bold">
+  {race.flag} {race.name}
+</h2>
+<p className="text-lg md:text-2xl">
+  Is it race week?{" "}
+  <span className={isRaceWeek ? 'text-green-600' : 'text-blue-600'}>
+    {isRaceWeek ? 'YES' : 'NO'}
+  </span>
+</p>
       </div>
 
       {/* Is it race week? */}
@@ -138,8 +137,8 @@ for (const session of sessions) {
       </p>
 
       {/* Race Info */}
-      <div className="space-y-2 text-sm max-w-md">
-        <ul className="space-y-1">
+      <div className="space-y-2 text-sm md:text-base max-w-md">
+  <ul className="space-y-1">
         {sessions.map((session, idx) => {
   const sessionParts = formatLocalDateParts(race.sessions[session.key as keyof typeof race.sessions]);
   const isLive = session.key === liveSessionKey;

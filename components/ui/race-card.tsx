@@ -89,15 +89,15 @@ export function RaceCard({ race, isCurrentRaceWeek, isNextRaceWeek }: RaceCardPr
   return (
     <Card className={`h-full transition ${highlightClass}`}>
       <CardHeader className="pb-1 pt-3">
-        <CardTitle className="text-base flex items-center gap-2">
-          <span className="text-xl">{race.flag}</span>
-          <span className="font-semibold">{race.name}</span>
-        </CardTitle>
-        <p className="text-xs text-muted-foreground">{race.location}</p>
-      </CardHeader>
+  <CardTitle className="text-lg md:text-xl flex items-center gap-2">
+    <span className="text-2xl md:text-3xl">{race.flag}</span>
+    <span className="font-semibold">{race.name}</span>
+  </CardTitle>
+  <p className="text-sm md:text-base text-muted-foreground">{race.location}</p>
+</CardHeader>
 
-      <CardContent className="space-y-1 text-xs pb-3">
-        <ul className="space-y-1">
+<CardContent className="space-y-1 text-sm md:text-base pb-3">
+  <ul className="space-y-1">
           {sessions.map((session, idx) => {
             const sessionParts = formatLocalDateParts(race.sessions[session.key as keyof typeof race.sessions]);
             const isLive = session.key === liveSessionKey;
