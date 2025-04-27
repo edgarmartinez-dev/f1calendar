@@ -61,10 +61,11 @@ export function RaceCard({ race, isCurrentRaceWeek, isNextRaceWeek }: RaceCardPr
   let highlightClass = '';
 
   if (isCurrentRaceWeek) {
-    highlightClass = 'bg-green-100 border border-green-400';
+    highlightClass = 'bg-green-50 border border-green-300';
   } else if (isNextRaceWeek) {
-    highlightClass = 'bg-blue-100 border border-blue-400';
+    highlightClass = 'bg-blue-50 border border-blue-300';
   }
+  
 
   const now = new Date();
   const sessions = [

@@ -108,12 +108,13 @@ for (const session of sessions) {
 
   return (
     <div
-      className={`w-full rounded-lg p-8 mb-8 border flex flex-col items-center text-center space-y-6 ${
-        isRaceWeek
-          ? 'bg-green-100 border-green-400'
-          : 'bg-blue-100 border-blue-400'
-      }`}
-    >
+  className={`w-full rounded-lg p-8 mb-8 border flex flex-col items-center text-center space-y-6 ${
+    isRaceWeek
+      ? 'bg-green-50 border-green-300'
+      : 'bg-blue-50 border-blue-300'
+  }`}
+>
+
       {/* Race Name + Label */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2">
         <h2 className="text-3xl font-bold">
