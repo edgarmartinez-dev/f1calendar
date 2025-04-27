@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.flip-card {
+    transition: transform 0.4s ease;
+  }
+  .flip-card.flip {
+    transform: rotateX(180deg);
+  }
+  
+
+.flip-card:hover {
+  transform: rotateX(360deg);
+}
+.bg-background {
+    background-color: #f8f9fa; /* very soft gray */
+  }
+  

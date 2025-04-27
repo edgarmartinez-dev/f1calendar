@@ -4,7 +4,7 @@ import { races } from '@/lib/races';
 import { RaceWeekBanner } from '@/components/ui/race-week-banner';
 import { RaceCard } from '@/components/ui/race-card';
 import { Separator } from '@/components/ui/separator';
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 function getCurrentOrNextRace() {
   const today = new Date();
@@ -30,11 +30,13 @@ function getCurrentOrNextRace() {
   return { raceIndex: -1, isRaceWeek: false };
 }
 
-
-
 export default function Home() {
   const today = new Date();
   const { raceIndex: specialRaceIndex, isRaceWeek } = getCurrentOrNextRace();
+
+  // Split into upcoming and past races
+  const upcomingRaces = races.filter(race => new Date(race.date) >= today);
+  const pastRaces = races.filter(race => new Date(race.date) < today);
 
   return (
     <main className="p-4 space-y-6">
@@ -45,21 +47,46 @@ export default function Home() {
 
       <Separator />
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-        {races.map((race, index) => {
-          const isCurrentRaceWeek = index === specialRaceIndex && isRaceWeek;
-          const isNextRaceWeek = index === specialRaceIndex && !isRaceWeek;
+      <Tabs defaultValue="upcoming" className="w-full space-y-6">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+          <TabsTrigger value="past">Past</TabsTrigger>
+        </TabsList>
 
-          return (
-            <RaceCard
-              key={index}
-              race={race}
-              isCurrentRaceWeek={isCurrentRaceWeek}
-              isNextRaceWeek={isNextRaceWeek}
-            />
-          );
-        })}
-      </div>
+        {/* UPCOMING RACES */}
+        <TabsContent value="upcoming">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {upcomingRaces.map((race, index) => {
+              const raceIndex = races.indexOf(race);
+              const isCurrentRaceWeek = raceIndex === specialRaceIndex && isRaceWeek;
+              const isNextRaceWeek = raceIndex === specialRaceIndex && !isRaceWeek;
+
+              return (
+                <RaceCard
+                  key={index}
+                  race={race}
+                  isCurrentRaceWeek={isCurrentRaceWeek}
+                  isNextRaceWeek={isNextRaceWeek}
+                />
+              );
+            })}
+          </div>
+        </TabsContent>
+
+        {/* PAST RACES */}
+        <TabsContent value="past">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {pastRaces.map((race, index) => (
+              <RaceCard
+                key={index}
+                race={race}
+                isCurrentRaceWeek={false}
+                isNextRaceWeek={false}
+              />
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
     </main>
   );
 }
