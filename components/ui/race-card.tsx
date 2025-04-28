@@ -58,15 +58,6 @@ function getShortTimeZone(timezone: string) {
 }
 
 export function RaceCard({ race, isCurrentRaceWeek, isNextRaceWeek }: RaceCardProps) {
-  let highlightClass = '';
-
-  if (isCurrentRaceWeek) {
-    highlightClass = 'bg-green-50 border border-green-300';
-  } else if (isNextRaceWeek) {
-    highlightClass = 'bg-blue-50 border border-blue-300';
-  }
-  
-
   const now = new Date();
   const sessions = [
     { key: "practice1", label: "Practice 1" },
@@ -76,7 +67,15 @@ export function RaceCard({ race, isCurrentRaceWeek, isNextRaceWeek }: RaceCardPr
     { key: "race", label: "Race" }
   ];
 
-  // Detect live session
+  let highlightClass = '';
+
+  if (isCurrentRaceWeek) {
+    highlightClass = 'border-green-300';
+  } else if (isNextRaceWeek) {
+    highlightClass = 'border-blue-300';
+  }
+
+  // LIVE detection
   let liveSessionKey: string | null = null;
   for (const session of sessions) {
     const sessionTime = new Date(race.sessions[session.key as keyof typeof race.sessions]);
@@ -87,34 +86,34 @@ export function RaceCard({ race, isCurrentRaceWeek, isNextRaceWeek }: RaceCardPr
   }
 
   return (
-    <Card className={`h-full transition ${highlightClass}`}>
-      <CardHeader className="pb-1 pt-3">
-  <CardTitle className="text-lg md:text-xl flex items-center gap-2">
-    <span className="text-2xl md:text-3xl">{race.flag}</span>
-    <span className="font-semibold">{race.name}</span>
-  </CardTitle>
-  <p className="text-sm md:text-base text-muted-foreground">{race.location}</p>
-</CardHeader>
+    <Card className={`h-full border ${highlightClass} shadow-sm hover:shadow-md hover:scale-[1.02] transition-all`}>
+      <CardHeader className="pb-2 pt-4 flex flex-col items-center text-center">
+        <CardTitle className="text-xl md:text-2xl flex items-center gap-2">
+          <span className="text-2xl md:text-3xl">{race.flag}</span>
+          <span className="font-bold">{race.name}</span>
+        </CardTitle>
+        <p className="text-xs md:text-sm text-muted-foreground">{race.location}</p>
+      </CardHeader>
 
-<CardContent className="space-y-1 text-sm md:text-base pb-3">
-  <ul className="space-y-1">
+      <CardContent className="space-y-2 text-xs md:text-sm px-4 pb-4">
+        <ul className="space-y-2">
           {sessions.map((session, idx) => {
             const sessionParts = formatLocalDateParts(race.sessions[session.key as keyof typeof race.sessions]);
             const isLive = session.key === liveSessionKey;
 
             return (
-              <li key={idx} className="flex flex-col">
-                <span className="font-semibold">
-                  {session.label}
+              <li key={idx} className="flex flex-col items-center">
+                <div className="flex items-center gap-2 font-semibold">
                   {isLive && (
-                    <span className="ml-2 inline-block bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full animate-pulse">
+                    <span className="inline-block bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full animate-pulse">
                       LIVE
                     </span>
                   )}
-                </span>
-                <span className="text-muted-foreground">
+                  {session.label}
+                </div>
+                <div className="text-muted-foreground">
                   {sessionParts.date} - {sessionParts.time} {sessionParts.timezone}
-                </span>
+                </div>
               </li>
             );
           })}

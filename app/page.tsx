@@ -5,6 +5,7 @@ import { RaceWeekBanner } from '@/components/ui/race-week-banner';
 import { RaceCard } from '@/components/ui/race-card';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { motion } from 'framer-motion';
 
 function getCurrentOrNextRace() {
   const today = new Date();
@@ -63,12 +64,18 @@ export default function Home() {
               const isNextRaceWeek = raceIndex === specialRaceIndex && !isRaceWeek;
 
               return (
+                <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
                 <RaceCard
                   key={index}
                   race={race}
                   isCurrentRaceWeek={isCurrentRaceWeek}
                   isNextRaceWeek={isNextRaceWeek}
                 />
+                 </motion.div>
               );
             })}
           </div>
@@ -76,15 +83,23 @@ export default function Home() {
 
         {/* PAST RACES */}
         <TabsContent value="past">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          
             {pastRaces.map((race, index) => (
+              <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               <RaceCard
                 key={index}
                 race={race}
                 isCurrentRaceWeek={false}
                 isNextRaceWeek={false}
               />
+              </motion.div>
             ))}
+            
           </div>
         </TabsContent>
       </Tabs>
