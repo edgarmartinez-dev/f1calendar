@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
+import { timezoneShortNames } from '@/lib/timezones';
 interface Race {
   name: string;
   location: string;
@@ -43,18 +43,10 @@ function formatLocalDateParts(utcString: string) {
   return { date: datePart, time: timePart, timezone: shortTimeZone };
 }
 
+
+
 function getShortTimeZone(timezone: string) {
-  const map: { [key: string]: string } = {
-    'America/New_York': 'EDT',
-    'America/Los_Angeles': 'PDT',
-    'America/Chicago': 'CDT',
-    'America/Toronto': 'EDT',
-    'Europe/London': 'BST',
-    'Europe/Paris': 'CEST',
-    'Asia/Tokyo': 'JST',
-    'Australia/Melbourne': 'AEST',
-  };
-  return map[timezone] || timezone.split('/')[1] || timezone;
+  return timezoneShortNames[timezone] || timezone.split('/')[1] || timezone;
 }
 
 export function RaceCard({ race, isCurrentRaceWeek, isNextRaceWeek }: RaceCardProps) {

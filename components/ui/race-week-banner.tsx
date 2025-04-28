@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { races } from '@/lib/races';
 import { Countdown } from '@/components/ui/countdown';
 import { format } from 'date-fns';
+import { timezoneShortNames } from '@/lib/timezones';
+
 
 function getRaceWeekInfo() {
   const today = new Date();
@@ -50,18 +52,9 @@ function formatLocalDateParts(utcString: string) {
   return { date: datePart, time: timePart, timezone: shortTimeZone };
 }
 
+
 function getShortTimeZone(timezone: string) {
-  const map: { [key: string]: string } = {
-    'America/New_York': 'EDT',
-    'America/Los_Angeles': 'PDT',
-    'America/Chicago': 'CDT',
-    'America/Toronto': 'EDT',
-    'Europe/London': 'BST',
-    'Europe/Paris': 'CEST',
-    'Asia/Tokyo': 'JST',
-    'Australia/Melbourne': 'AEST',
-  };
-  return map[timezone] || timezone.split('/')[1] || timezone;
+  return timezoneShortNames[timezone] || timezone.split('/')[1] || timezone;
 }
 
 export function RaceWeekBanner() {
